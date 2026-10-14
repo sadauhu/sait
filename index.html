@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FinFuture — финансовый симулятор</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <div class="brand"><div class="logo">F</div><div><b>FinFuture</b><small>SIMULATOR</small></div></div>
+    <div class="eyebrow">Рабочее пространство</div>
+    <nav id="nav">
+      <a href="#overview" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 3v18"/></svg>Обзор</a>
+      <a href="#ops"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h14l-3-3M20 16H6l3 3"/></svg>Операции</a>
+      <a href="#goals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>Цели накопления</a>
+      <a href="#analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 17V11M12 17V7M16 17v-4"/></svg>Аналитика</a>
+    </nav>
+    <div class="tip"><i>✦</i><b>Маленькие шаги — большие цели</b>Регулярно отслеживай расходы и приближайся к финансовым целям.</div>
+    <button class="sidebtn" id="themeBtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span id="themeTxt">Тёмная тема</span></button>
+    <div class="me"><div class="av">М</div><div><b>Мой бюджет</b><small>Личный кабинет</small></div><span class="dot"></span></div>
+  </aside>
+
+  <main>
+    <div class="top" id="overview">
+      <div>
+        <div class="kicker" id="kicker">Личные финансы</div>
+        <h1>Финансовый обзор</h1>
+        <p class="lead">Контролируй деньги. Планируй будущее.</p>
+      </div>
+      <button class="btn" id="openTx" type="button">+ Добавить операцию</button>
+    </div>
+
+    <div class="head">
+      <div><h2>Твоя финансовая картина</h2><p class="sub">Сводка по всем операциям и целям</p></div>
+      <label class="field">Период
+        <select id="period">
+          <option value="week">Последние 7 дней</option>
+          <option value="month" selected>Текущий месяц</option>
+          <option value="year">Текущий год</option>
+          <option value="all">Всё время</option>
+        </select>
+      </label>
+    </div>
+
+    <section class="stats" aria-label="Сводка">
+      <div class="stat main"><div class="l">Общий баланс<span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l4 10-4 10-4-10z"/></svg></span></div><div class="v num" id="balance">0 сом</div><div class="f"><span>Текущий баланс</span><span>Все операции</span></div></div>
+      <div class="stat inc"><div class="l">Доходы<span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></span></div><div class="v num" id="income">0 сом</div><div class="f"><span>↑ Поступления</span><span id="incN">0 операций</span></div></div>
+      <div class="stat exp"><div class="l">Расходы<span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 7l10 10M17 9v8H9"/></svg></span></div><div class="v num" id="expenses">0 сом</div><div class="f"><span>↓ Списания</span><span id="expN">0 операций</span></div></div>
+      <div class="stat sav"><div class="l">Накопления по целям<span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span></div><div class="v num" id="savings">0 сом</div><div class="f"><span>Целевой капитал</span><span id="goalN">0 целей</span></div></div>
+    </section>
+
+    <section class="two" id="analytics">
+      <div class="card">
+        <div class="ch"><div><h3>Доходы и расходы</h3><p class="sub" id="chartSub">Сравнение за выбранный период</p></div>
+          <div class="leg"><span><i class="bi"></i>Доходы</span><span><i class="be"></i>Расходы</span></div></div>
+        <div id="bars"></div>
+        <div class="sums"><div>Доходы<b class="num" id="incT">0 сом</b></div><div>Расходы<b class="num" id="expT">0 сом</b></div></div>
+      </div>
+      <div class="card">
+        <div><h3>Расходы по категориям</h3><p class="sub">Структура расходов</p></div>
+        <div id="donut"></div>
+        <div class="budget">
+          <div class="brow"><b>Использовано бюджета</b><b class="num" id="bPct">0%</b></div>
+          <div class="track"><div id="bBar"></div></div>
+          <div class="bmeta"><span id="bSpent">0 сом потрачено</span><span id="bLim">Лимит не задан</span></div>
+          <div class="warn" id="warn"></div>
+          <form class="limit" id="limitForm"><input id="limit" type="number" min="0" inputmode="numeric" placeholder="Месячный лимит, сом, например 15000" aria-label="Месячный лимит, сом"><button class="btn soft sm" type="submit">Сохранить</button></form>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="ops">
+      <div class="ch"><div><h3>Последние операции</h3><p class="sub">Все движения твоих средств</p></div>
+        <button class="btn line sm" id="csvBtn" type="button">Копировать CSV</button></div>
+      <div class="tools">
+        <input class="search" id="q" type="search" placeholder="Поиск по категории или описанию" aria-label="Поиск">
+        <label>С <input type="date" id="df"></label>
+        <label>По <input type="date" id="dt"></label>
+        <button class="btn soft sm" id="reset" type="button">Сбросить</button>
+      </div>
+      <div class="tablewrap scroll">
+        <table><thead><tr><th>Операция</th><th>Категория</th><th>Дата</th><th>Тип</th><th>Сумма</th></tr></thead><tbody id="rows"></tbody></table>
+      </div>
+      <div class="foot"><span id="shown">Показано 0 из 0 операций</span><span>Данные хранятся в этом браузере</span></div>
+    </section>
+
+    <section class="card" id="goals">
+      <div class="ch"><div><h3>Цели накопления</h3><p class="sub">Превращай планы в реальные результаты</p></div>
+        <button class="btn line sm" id="openGoal" type="button">+ Новая цель</button></div>
+      <div class="goals" id="goalList"></div>
+    </section>
+
+    <div class="foot"><span>© 2026 FinFuture</span><span>Создано для разумного управления финансами ✦</span></div>
+  </main>
+</div>
+
+<div class="modal" id="mTx" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTxT">
+    <h2 id="mTxT">Новая операция</h2>
+    <form id="txForm">
+      <div class="seg" id="seg"><button type="button" data-t="expense" class="on">Расход</button><button type="button" data-t="income">Доход</button></div>
+      <label>Сумма, сом<input id="amount" type="number" min="1" step="any" inputmode="decimal" placeholder="Например: 500" required></label>
+      <label>Категория<select id="category"></select></label>
+      <label>Описание (необязательно)<input id="desc" type="text" maxlength="60" placeholder="Например: обед в столовой"></label>
+      <label>Дата<input id="date" type="date" required></label>
+      <div class="err" id="txErr"></div>
+      <div class="actions"><button type="button" class="btn line sm" data-close>Отмена</button><button class="btn sm" type="submit">Добавить</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="mGoal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mGoalT">
+    <h2 id="mGoalT">Новая цель</h2>
+    <form id="goalForm">
+      <label>Название<input id="gName" type="text" maxlength="50" placeholder="Например: Новый компьютер" required></label>
+      <label>Нужная сумма, сом<input id="gTarget" type="number" min="1" inputmode="numeric" placeholder="Например: 60000" required></label>
+      <label>Взнос в месяц, сом (для прогноза)<input id="gMonthly" type="number" min="1" inputmode="numeric" placeholder="Например: 5000"></label>
+      <div class="actions"><button type="button" class="btn line sm" data-close>Отмена</button><button class="btn sm" type="submit">Создать цель</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+<script src="script.js"></script>
+</body>
+</html>
